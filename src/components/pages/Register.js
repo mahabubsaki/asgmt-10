@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc'
 import { FiGithub } from 'react-icons/fi'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuthState, useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
@@ -10,16 +10,28 @@ import Loading from '../utilities/Loading';
 import { useUpdateProfile } from 'react-firebase-hooks/auth';
 import '../../styles/LoginSingup.css'
 const Register = () => {
+    // setting all the states and calling hooks
+    const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirm, setConfirm] = useState('')
+    const [myError, setMyError] = useState('')
+    const [initUser, initLoading] = useAuthState(auth);
     const [updateProfile] = useUpdateProfile(auth);
     const [sendEmailVerification] = useSendEmailVerification(auth);
-    const navigate = useNavigate()
-    const [
-        createUserWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useCreateUserWithEmailAndPassword(auth);
-    const [initUser, initLoading] = useAuthState(auth);
+    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+    const navigate = useNavigate();
+    // toastsettings variable declared for reuse
+    const toastSettings = {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    }
+    // This useeffect set to block the user from going register page in case he is logged in
     useEffect(() => {
         if (!user) {
             if (initUser) {
@@ -27,70 +39,7 @@ const Register = () => {
             }
         }
     }, [initUser, navigate, user])
-    const [myError, setMyError] = useState('')
-    useEffect(() => {
-        if (myError) {
-            toast.error(myError, {
-                position: "top-center",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            })
-        }
-    }, [myError])
-    const [email, setEmail] = useState('')
-    const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirm, setConfirm] = useState('')
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if (password.length < 8) {
-            toast.error('Password can not be less than 8 characters', {
-                position: "top-center",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            return
-        }
-        if (password !== confirm) {
-            toast.error('Confirm password did not match', {
-                position: "top-center",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            return
-        }
-        createUserWithEmailAndPassword(email, password)
-    }
-    let location = useLocation();
-    let from = location.state?.from?.pathname || "/";
-    useEffect(() => {
-        sendEmailVerification()
-        updateProfile({ displayName: name, photoURL: '' })
-        if (user) {
-            toast.success(`Sent an verification mail to ${user.user.email}, Please verify it for additional purchase`, {
-                position: "top-center",
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            navigate(from, { replace: true });
-        }
-    }, [user, navigate, from, name, updateProfile, sendEmailVerification])
+    // this useeffect will keep eye on hook error and if that error changes it will set into myerror state
     useEffect(() => {
         if (error) {
             setMyError(error.message)
@@ -99,6 +48,40 @@ const Register = () => {
             setMyError('')
         }
     }, [error])
+    // This useeffect set for keeping eye on error and show it when there is an error
+    // I only made toastSettings for reuse that's why not giving it on dependency
+    useEffect(() => {
+        if (myError) {
+            if (myError.includes("email-already-in-use")) {
+                toast.error("Sorry ! Given email already in use", toastSettings)
+            }
+            else {
+                toast.error("Something went wrong!", toastSettings)
+            }
+        }
+    }, [myError])
+    // this event will call in case of form submit and will go some manual checking of password then user will be created
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (password.length < 8) {
+            toast.error('Password can not be less than 8 characters', toastSettings);
+            return
+        }
+        if (password !== confirm) {
+            toast.error('Confirm password did not match', toastSettings);
+            return
+        }
+        createUserWithEmailAndPassword(email, password)
+    }
+    // this useeffect keep eye on user creation if user is created first sent a email verification and notifying it through toast, then updating the name from given from and navigating into home page
+    useEffect(() => {
+        sendEmailVerification()
+        updateProfile({ displayName: name, photoURL: '' })
+        if (user) {
+            toast.success(`Sent an verification mail to ${user.user.email}, Please verify it for additional purchase`, toastSettings);
+            navigate('/');
+        }
+    }, [user, navigate, name, updateProfile, sendEmailVerification])
     if (loading) {
         return <Loading></Loading>;
     }

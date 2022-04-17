@@ -24,6 +24,7 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="ms-auto d-flex align-items-center">
+                        <Nav.Link as={CustomLink} to="/">Home</Nav.Link>
                         <Nav.Link as={CustomLink} to="/blogs">Blogs</Nav.Link>
                         <Nav.Link as={CustomLink} to="/about">About</Nav.Link>
                         {
