@@ -3,12 +3,14 @@ import { FcGoogle } from 'react-icons/fc'
 import { FiGithub } from 'react-icons/fi'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
-import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignInWithEmailAndPassword, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 import Loading from '../utilities/Loading';
 import '../../styles/LoginSingup.css'
 
 const Login = () => {
+    const [signInWithGoogle, user1, loading1, error1] = useSignInWithGoogle(auth);
+    const [signInWithGithub, user2, loading2, error2] = useSignInWithGithub(auth);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     let navigate = useNavigate();
