@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import useServices from './components/hooks/useServices';
 import About from './components/pages/About';
@@ -11,6 +12,7 @@ import Notfound from './components/pages/Notfound';
 import Register from './components/pages/Register';
 import Footer from './components/shared/Footer';
 import Header from './components/shared/Header';
+import RequireAuth from './components/utilities/RequireAuth';
 export const ServicesContext = createContext()
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
   return (
     <ServicesContext.Provider value={{ services }}>
       <div className="App">
+        <ToastContainer></ToastContainer>
         <Header></Header>
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
@@ -26,7 +29,9 @@ function App() {
           <Route path="/register" element={<Register></Register>}></Route>
           <Route path="/about" element={<About></About>}></Route>
           <Route path="/blogs" element={<Blogs></Blogs>}></Route>
-          <Route path="/checkout/:id" element={<Checkout></Checkout>}></Route>
+          <Route path="/checkout/:id" element={<RequireAuth>
+            <Checkout></Checkout>
+          </RequireAuth>}></Route>
           <Route path="*" element={<Notfound></Notfound>}></Route>
         </Routes>
         <Footer></Footer>

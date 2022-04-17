@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Notfound = () => {
     const navigate = useNavigate()
     return (
-        <div style={{ height: "550px" }} className="d-flex justify-content-center align-items-center w-100">
+        <div style={{ height: "500px" }} className="d-flex justify-content-center align-items-center w-100">
             <div className="text-center">
                 <h1>404 not found</h1>
                 <h1>Are you lost? :(</h1>
