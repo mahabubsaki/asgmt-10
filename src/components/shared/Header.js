@@ -10,7 +10,7 @@ const Header = () => {
             <Container fluid>
                 <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
                     <FaHandHoldingMedical></FaHandHoldingMedical>
-                    <span className="ms-2">MediSpace</span></Navbar.Brand>
+                    <span className="ms-2"><span style={{ color: "orange" }}>Medi</span><span style={{ color: "LightGray" }}>Space</span></span></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="ms-auto">

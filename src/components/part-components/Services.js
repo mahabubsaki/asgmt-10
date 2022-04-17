@@ -6,12 +6,12 @@ const Services = () => {
     const { services } = useContext(ServicesContext)
     return (
         <div className="container w-75 mx-auto" id="services">
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 border">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
                 {
-                    services.map(service =>
+                    services?.map(service =>
                         <Service
                             key={service.id}
-                            service={service}>
+                            item={service}>
                         </Service>)
                 }
             </div>
