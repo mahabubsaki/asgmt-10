@@ -57,7 +57,6 @@ const Register = () => {
         }
     }, [error, error1, error2])
     // This useeffect set for keeping eye on error and show it when there is an error
-    // I only made toastSettings for reuse that's why not giving it on dependency
     useEffect(() => {
         if (myError) {
             if (myError.includes("email-already-in-use")) {
@@ -90,17 +89,15 @@ const Register = () => {
                 toast.success(`Sent an verification mail to ${user?.user.email}, Please verify it for additional purchase`, toastSettings);
             }
             else if (user1 || user2) {
-                toast.success(`Successfully logged in with ${user1?.user.email || user2?.user.email}`, toastSettings)
+                toast.success(`Successfully logged in 🎉`, toastSettings)
             }
             navigate('/');
         }
     }, [user, user1, user2, navigate, name, updateProfile, sendEmailVerification])
-    if (loading || loading1 || loading2) {
+    if (loading || loading1 || loading2 || initLoading) {
         return <Loading></Loading>;
     }
-    if (initLoading) {
-        return <Loading></Loading>;
-    }
+    // I only made toastSettings for reuse that's why not giving it on dependency
     return (
         <div style={{ height: "600px" }} className="d-flex justify-content-center align-items-center">
             <div className="login-singup mx-auto">
