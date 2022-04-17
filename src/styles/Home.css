@@ -1,0 +1,10 @@
+.banner {
+  background-image: url('https://i.ibb.co/1zpCRc4/banner.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right top;
+  min-height: 550px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
