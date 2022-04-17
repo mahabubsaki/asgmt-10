@@ -1,0 +1,8 @@
+.login-singup {
+  width: 55%;
+}
+@media only screen and (max-width: 650px) {
+  .login-singup {
+    width: 100%;
+  }
+}

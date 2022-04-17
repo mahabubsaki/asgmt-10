@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useParams } from 'react-router-dom';
 import { ServicesContext } from '../../App';
+import auth from '../../firebase.init';
 import '../../styles/Checkout.css'
 import Checkoutform from '../part-components/Checkoutform';
+import Loading from '../utilities/Loading';
 import Notfound from './Notfound';
 
 const Checkout = () => {
+    const [user, loading] = useAuthState(auth);
     const { id } = useParams()
     let allServices;
     const { services } = useContext(ServicesContext)
@@ -20,6 +24,9 @@ const Checkout = () => {
         return <Notfound></Notfound>
     }
     const { service, price, description, img } = singleService
+    if (loading) {
+        return <Loading></Loading>;
+    }
     return (
         <div className="checkout-container">
             <div className="d-flex justify-content-center align-items-center left-div">
@@ -31,7 +38,7 @@ const Checkout = () => {
                 </div>
             </div>
             <div className="d-flex justify-content-center align-items-center right-div">
-                <Checkoutform></Checkoutform>
+                <Checkoutform user={user}></Checkoutform>
             </div>
         </div>
     );
