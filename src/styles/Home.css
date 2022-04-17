@@ -3,8 +3,9 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right top;
-  min-height: 550px;
+  min-height: 500px;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 20px;
 }

@@ -1,0 +1,17 @@
+.checkout-container {
+  display: flex;
+  flex-direction: row;
+}
+.left-div,
+.right-div {
+  width: 50%;
+}
+@media only screen and (max-width: 768px) {
+  .checkout-container {
+    flex-direction: column;
+  }
+  .left-div,
+  .right-div {
+    width: 100%;
+  }
+}

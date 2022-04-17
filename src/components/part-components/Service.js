@@ -13,7 +13,7 @@ const Service = ({ item }) => {
                     <h2 className="card-title">Price : ${price}</h2>
                     <p className="card-text">{description}</p>
                 </div>
-                <div class="card-footer d-flex justify-content-center">
+                <div className="card-footer d-flex justify-content-center">
                     <button className="btn btn-success" onClick={() => navigate(`checkout/${id}`)}>Book Now!</button>
                 </div>
             </div>

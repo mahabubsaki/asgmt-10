@@ -7,7 +7,9 @@ const useServices = () => {
             .then(res => res.json())
             .then(data => setServices(data))
     }, [])
-    localStorage.setItem('allServices', JSON.stringify(services))
+    if (services.length > 0) {
+        localStorage.setItem('allServices', JSON.stringify(services))
+    }
     return services
 }
 export default useServices
