@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/Service.css'
 
 const Service = ({ item }) => {
     const navigate = useNavigate()
     const { service, img, id, price, description } = item || {};
     return (
-        <div className="col mb-2">
+        <div className="col mb-5 service">
             <div className="card h-100">
-                <img src={img} className="card-img-top img-fluid" alt="..." />
+                <img src={img} className="card-img-top img-fluid service-img" alt="..." />
                 <div className="card-body">
                     <h3 className="card-title">{service}</h3>
                     <h2 className="card-title">Price : ${price}</h2>
