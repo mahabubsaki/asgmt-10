@@ -20,9 +20,9 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, user1, loading1, error1] = useSignInWithGoogle(auth);
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
     const [signInWithGithub, user2, loading2, error2] = useSignInWithGithub(auth);
     const [initUser, initLoading] = useAuthState(auth);
-    const [sendPasswordResetEmail, sending, error3] = useSendPasswordResetEmail(auth);
     let navigate = useNavigate();
     let location = useLocation();
     // remembering from where user came to login page and redirecting them back to that page
@@ -57,13 +57,10 @@ const Login = () => {
         else if (error2) {
             setMyError(error2?.message)
         }
-        else if (error3) {
-            setMyError(error3?.message)
-        }
         else {
             setMyError('')
         }
-    }, [error, error1, error2, error3])
+    }, [error, error1, error2])
     // This useeffect set for keeping eye on error and show it when there is an error
     useEffect(() => {
         if (myError) {
@@ -90,21 +87,23 @@ const Login = () => {
         e.preventDefault();
         signInWithEmailAndPassword(email, password)
     }
-    // handling forget password
-    const handleResetPassword = async () => {
-        await sendPasswordResetEmail(email);
-        if (error3?.message) {
-            toast.success('Forget password link has been reset,Please check your mail', toastSettings)
+    // handleing forget password
+    const handleResetPass = () => {
+        if (!email) {
+            toast.error('Please Input the email you want to reset Password', toastSettings)
+            return
         }
+        sendPasswordResetEmail(email)
+        toast.info('If the given email match any existing user than you will get a reset password link', toastSettings)
     }
     // I only made toastSettings for reuse that's why not giving it on dependency
     if (loading || loading1 || loading2 || initLoading) {
         return <Loading></Loading>;
     }
     if (sending) {
-        return <Loading>
+        <Loading>
             Sending...
-        </Loading>
+        </Loading>;
     }
     return (
         <div style={{ height: "600px" }} className="d-flex justify-content-center align-items-center">
@@ -120,7 +119,7 @@ const Login = () => {
                     <h5 className="mx-2" style={{ position: 'relative', top: '2.5px' }}>or</h5>
                     <hr style={{ width: '35%', border: '3px solid black' }} />
                 </div>
-                <p className="text-primary text-center" style={{ cursor: 'pointer' }} onClick={handleResetPassword}>Forget Password?</p>
+                <p className="text-primary text-center" style={{ cursor: 'pointer' }} onClick={handleResetPass}>Forget Password?</p>
                 <p className="text-center">New User ? <Link to="/register" className='text-decoration-none text-info'>Sign Up</Link> Now!</p>
                 <button className="d-block w-50 mx-auto btn btn-light border border-primary mb-2" onClick={() => signInWithGoogle()}>
                     <FcGoogle></FcGoogle>
