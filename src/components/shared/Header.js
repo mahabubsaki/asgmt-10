@@ -35,9 +35,9 @@ const Header = () => {
                                     <Nav.Link className="fs-4">
                                         <BiUserCircle></BiUserCircle>
                                         {
-                                            user.emailVerified ? <small style={{ fontSize: "16px" }} className="text-success">Verified</small>
+                                            user.emailVerified ? <small style={{ fontSize: "18px" }} className="text-success fw-bolder">Verified</small>
                                                 :
-                                                <small style={{ fontSize: "16px" }} className="text-danger">Not verified</small>
+                                                <small style={{ fontSize: "18px" }} className="text-danger fw-bolder">Not verified</small>
                                         }
                                     </Nav.Link>
 

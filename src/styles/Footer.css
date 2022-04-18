@@ -1,0 +1,15 @@
+.footer-container {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.footer-container p:hover {
+  cursor: pointer;
+  color: gray;
+}
+@media only screen and (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+  }
+}

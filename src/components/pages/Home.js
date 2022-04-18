@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../styles/Home.css'
+import Features from '../part-components/Features';
 import Services from '../part-components/Services';
 
 
@@ -15,6 +16,7 @@ const Home = () => {
                 </div>
             </div>
             <Services></Services>
+            <Features></Features>
         </div>
     );
 };
