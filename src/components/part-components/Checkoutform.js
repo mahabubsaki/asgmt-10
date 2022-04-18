@@ -2,6 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 const Checkoutform = ({ user }) => {
+    console.log(user);
     const toastSettings = {
         position: "top-center",
         autoClose: 4000,
